@@ -25,7 +25,12 @@ public class LoginCasesTest extends BaseDeneme {
 
         List<UserInformation> userInformationList = readFromCSVFile();
 
-        if (m.getName().equals("invalidLoginTest")) {
+        if (m.getName().equals("successLoginCase")) {
+
+            UserInformation userInformation = getRelatedUserInformation(userInformationList, "SuccessLoginCase");
+            return new Object[][]{{userInformation}};
+
+        } else if (m.getName().equals("invalidLoginCase")) {
 
             UserInformation userInformation = getRelatedUserInformation(userInformationList, "InvalidLoginCase");
             return new Object[][]{{userInformation}};
@@ -41,8 +46,8 @@ public class LoginCasesTest extends BaseDeneme {
     }
 
 
-    @Test(dataProvider = "data-provider",description = "Invalid scenario for login.")
-    public void invalidLoginTest(UserInformation userInformation, Method method) {
+    @Test(dataProvider = "data-provider", description = "Invalid scenario for login.")
+    public void successLoginCase(UserInformation userInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Invalid Login Scenario with invalid username and password.");
         closeFancyPopUp(driver);
@@ -55,18 +60,32 @@ public class LoginCasesTest extends BaseDeneme {
 
     }
 
+
     @Test(dataProvider = "data-provider", description = "Right error message for wrong email.")
-    public void rightErrorMessageForWrongEmail(UserInformation userInformation, Method method) {
+    public void invalidLoginCase(UserInformation userInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Invalid Login Scenario with invalid username and password.");
-        String message = "E-posta adresiniz ve/veya şifreniz hatalı.";
 
         com.trendyolLogin.pages.HomePage homePage = new com.trendyolLogin.pages.HomePage(driver);
         closeFancyPopUp(driver);
         homePage.goToTrendyol()
                 .goToLoginPage()
                 .loginToTrendyol(userInformation.getEmail(), userInformation.getPassword())
-                .verifyLoginEmail(message);
+                .verifyLoginSuccessful("https://www.trendyol.com/butik");
+
+    }
+
+    @Test(dataProvider = "data-provider", description = "Right error message for wrong email.")
+    public void rightErrorMessageForWrongEmail(UserInformation userInformation, Method method) {
+
+        ExtentTestManager.startTest(method.getName(), "Invalid Login Scenario with invalid username and password.");
+
+        com.trendyolLogin.pages.HomePage homePage = new com.trendyolLogin.pages.HomePage(driver);
+        closeFancyPopUp(driver);
+        homePage.goToTrendyol()
+                .goToLoginPage()
+                .loginToTrendyol(userInformation.getEmail(), userInformation.getPassword())
+                .verifyLoginEmail("E-posta adresiniz ve/veya şifreniz hatalı.");
 
     }
 

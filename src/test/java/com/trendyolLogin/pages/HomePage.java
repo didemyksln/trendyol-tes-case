@@ -25,12 +25,6 @@ public class HomePage extends BasePage {
         return new LoginPage(driver);
     }
 
-    public void verifyPageOpened() {
-
-        Assert.assertTrue(driver.getCurrentUrl().contains("https://www.trendyol.com/butik/"));
-
-    }
-
 
 }
 

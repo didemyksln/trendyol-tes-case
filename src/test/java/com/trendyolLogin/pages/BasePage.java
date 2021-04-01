@@ -31,4 +31,9 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(elementBy));
     }
 
+
+    public void waitForUrl(String url) {
+        wait.until(ExpectedConditions.urlContains(url));
+    }
+
 }

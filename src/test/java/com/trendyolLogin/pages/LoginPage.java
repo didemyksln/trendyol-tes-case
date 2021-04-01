@@ -1,10 +1,7 @@
 package com.trendyolLogin.pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import static org.testng.Assert.assertEquals;
@@ -42,7 +39,7 @@ public class LoginPage extends BasePage {
 
 
     public void verifyLoginSuccessful(String expectedUrl) {
-        waitForPageLoadComplete(driver,10);
+        waitForUrl(expectedUrl);
         Assert.assertTrue(driver.getCurrentUrl().contains(expectedUrl));
     }
 
@@ -51,11 +48,6 @@ public class LoginPage extends BasePage {
         return driver.findElement(errorMessage).getText();
     }
 
-    public void waitForPageLoadComplete(WebDriver driver, int specifiedTimeout) {
-        Wait<WebDriver> wait = new WebDriverWait(driver, specifiedTimeout);
-        wait.until(driver1 -> String
-                .valueOf(((JavascriptExecutor) driver1).executeScript("return document.readyState"))
-                .equals("complete"));
-    }
+
 }
 
