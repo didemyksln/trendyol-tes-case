@@ -1,0 +1,4 @@
+TestCaseName,Email,Password
+ValidEmailPassword,seleniumprojetest@gmail.com,Selenium_5367
+InvalidEmail,selenium@gmail.com,Selenium_5367
+
