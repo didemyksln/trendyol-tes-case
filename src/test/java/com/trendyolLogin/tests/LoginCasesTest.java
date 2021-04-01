@@ -25,13 +25,14 @@ public class LoginCasesTest extends BaseDeneme {
 
         List<UserInformation> userInformationList = readFromCSVFile();
 
-        if (m.getName().equals("loginTestWithValidEmailPassword")) {
+        if (m.getName().equals("invalidLoginTest")) {
 
-            UserInformation userInformation = getRelatedUserInformation(userInformationList, "ValidEmailPassword");
+            UserInformation userInformation = getRelatedUserInformation(userInformationList, "InvalidLoginCase");
             return new Object[][]{{userInformation}};
-        } else if (m.getName().equals("loginTestWithInValidEmail")) {
 
-            UserInformation userInformation = getRelatedUserInformation(userInformationList, "InvalidEmail");
+        } else if (m.getName().equals("rightErrorMessageForWrongEmail")) {
+
+            UserInformation userInformation = getRelatedUserInformation(userInformationList, "RightErrorMessageForInvalidEmail");
             return new Object[][]{{userInformation}};
         }
 
@@ -40,8 +41,8 @@ public class LoginCasesTest extends BaseDeneme {
     }
 
 
-    @Test(dataProvider = "data-provider")
-    public void loginTestWithValidEmailPassword(UserInformation userInformation, Method method) {
+    @Test(dataProvider = "data-provider",description = "Invalid scenario for login.")
+    public void invalidLoginTest(UserInformation userInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Invalid Login Scenario with invalid username and password.");
         closeFancyPopUp(driver);
@@ -49,13 +50,13 @@ public class LoginCasesTest extends BaseDeneme {
         homePage.goToTrendyol()
                 .goToLoginPage()
                 .loginToTrendyol(userInformation.getEmail(), userInformation.getPassword())
-                .verifyLoginSuccessful("https://www.trendyol.com/butik/kadin");
+                .verifyLoginSuccessful("https://www.trendyol.com/butik");
 
 
     }
 
-    @Test(dataProvider = "data-provider", description = "Valid login scenario with right email and password.")
-    public void loginTestWithInValidEmail(UserInformation userInformation, Method method) {
+    @Test(dataProvider = "data-provider", description = "Right error message for wrong email.")
+    public void rightErrorMessageForWrongEmail(UserInformation userInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Invalid Login Scenario with invalid username and password.");
         String message = "E-posta adresiniz ve/veya şifreniz hatalı.";

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="methods" thread-count="2" verbose="1">
-
-<test name="/Users/didemyukselen/Downloads/trendyolcase/src/test/java/com/trendyolLogin" parallel="methods" thread-count="2" verbose="1">
-    <classes>
-        <class name="com.trendyolLogin.tests.LoginCasesTest">
-            <methods>
-                <include name="loginTestWithValidEmailPassword"/>
-                <include name="loginTestWithInValidEmail"/>
-            </methods>
-        </class>
-    </classes>
-</test>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="tests" thread-count="2" verbose="1">
 
     <listeners>
         <listener class-name="com.trendyolLogin.utils.listeners.TestListener"/>
         <listener class-name="com.trendyolLogin.utils.listeners.AnnotationTransformer"/>
     </listeners>
+
+    <test name="LoginTestInChrome">
+        <parameter name="browser" value="Chrome"></parameter>
+        <classes>
+            <class name="com.trendyolLogin.tests.LoginCasesTest">
+                <methods>
+                    <include name="invalidLoginTest"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="LoginTestInFirefox">
+        <parameter name="browser" value="Chrome"></parameter>
+        <classes>
+            <class name="com.trendyolLogin.tests.LoginCasesTest">
+                <methods>
+                    <include name="rightErrorMessageForWrongEmail"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
 </suite>

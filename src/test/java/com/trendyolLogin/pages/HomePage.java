@@ -14,7 +14,6 @@ public class HomePage extends BasePage {
 
     String baseURL = "http://www.trendyol.com/";
     By signIn = By.xpath("//div[@class='account-nav-item user-login-container']");
-    By notificationBar = By.id("notification-popup");
 
     public HomePage goToTrendyol() {
         driver.get(baseURL);
