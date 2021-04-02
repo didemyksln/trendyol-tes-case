@@ -1,51 +1,38 @@
 package com.trendyol.tests;
 
+import com.google.common.collect.Lists;
 import com.trendyol.BaseTest;
 import com.trendyol.model.BoutiquePageResponse;
+import com.trendyol.utils.reports.ExtentTestManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.trendyol.utils.FileUtils.writeToCSVFile;
 
 public class BoutiqueLoaderTest extends BaseTest {
 
     @Test
-    public void loadBoutiqueLinks() throws IOException {
+    public void loadBoutiqueLinks(Method method) throws IOException {
+
+        ExtentTestManager.startTest(method.getName(), "Test Scenario: Valid Login Scenario with right email and password.");
         closeFancyPopUp(driver);
         List<BoutiquePageResponse> boutiquePageResponseList = fetchBoutiquePages();
-        writeResponseCodeToCSV(boutiquePageResponseList);
-    }
-
-    private void writeResponseCodeToCSV(List<BoutiquePageResponse> boutiquePageResponseList) throws IOException {
-        String parentDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "case1";
-        String filePath = parentDirectory + File.separator + "case-1-response-code.csv" ;
-        Files.createDirectories(Paths.get(parentDirectory));
-
-        try (FileWriter csvWriter = new FileWriter(filePath)) {
-            csvWriter.append("Boutique Link")
-                    .append(";")
-                    .append("Response Code")
-                    .append("\n");
-
-            for (BoutiquePageResponse boutiquePageResponse : boutiquePageResponseList) {
-                csvWriter.append(boutiquePageResponse.getUrl())
-                        .append(";")
-                        .append(String.valueOf(boutiquePageResponse.getResponseCode()))
-                        .append("\n");
-            }
-            csvWriter.flush();
+        List<List<String>> contentList = new ArrayList<>();
+        for (BoutiquePageResponse boutiquePageResponse : boutiquePageResponseList) {
+            contentList.add(Lists.newArrayList(boutiquePageResponse.getUrl(), String.valueOf(boutiquePageResponse.getResponseCode())));
         }
+        writeToCSVFile("boutique-load-response-code.csv", new String[]{"Boutique Link", "Response Code"}, contentList);
     }
+
 
     private List<BoutiquePageResponse> fetchBoutiquePages() throws IOException {
         List<BoutiquePageResponse> boutiquePageResponseList = new ArrayList<>();

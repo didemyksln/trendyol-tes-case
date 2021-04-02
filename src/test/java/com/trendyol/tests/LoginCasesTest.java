@@ -20,38 +20,8 @@ public class LoginCasesTest extends BaseTest {
 
         List<TestCaseInformation> testCaseInformationList = FileUtils.readFromCSVFile();
 
-        if (m.getName().equals("successLoginCase")) {
-
-            TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, "SuccessLoginCase");
-            return new Object[][]{{testCaseInformation}};
-
-        } else if (m.getName().equals("invalidLoginCase")) {
-
-            TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, "InvalidLoginCase");
-            return new Object[][]{{testCaseInformation}};
-
-        } else if (m.getName().equals("checkErrorMessageForWrongEmail")) {
-
-            TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, "CheckErrorMessageForInvalidEmail");
-            return new Object[][]{{testCaseInformation}};
-
-        } else if (m.getName().equals("checkErrorMessageForWrongPassword")) {
-
-            TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, "CheckErrorMessageForInvalidPassoword");
-            return new Object[][]{{testCaseInformation}};
-
-        } else if(m.getName().equals("checkErrorMessageForEmptyEmail")){
-
-            TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, "CheckErrorMessageForEmtpyEmail");
-            return new Object[][]{{testCaseInformation}};
-
-        } else if(m.getName().equals("checkErrorMessageForEmptyPassword")) {
-
-            TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, "CheckErrorMessageForEmptyPassword");
-            return new Object[][]{{testCaseInformation}};
-        }
-
-        return new Object[][]{};
+        TestCaseInformation testCaseInformation = getRelatedUserInformation(testCaseInformationList, m.getName());
+        return new Object[][]{{testCaseInformation}};
 
     }
 
@@ -85,7 +55,7 @@ public class LoginCasesTest extends BaseTest {
     }
 
     @Test(dataProvider = "data-provider", description = "Check error message for wrong email.")
-    public void checkErrorMessageForWrongEmail(TestCaseInformation testCaseInformation, Method method) {
+    public void checkErrorMessageForInvalidEmail(TestCaseInformation testCaseInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Test Scenario: Check Login Scenario with invalid email address.");
         closeFancyPopUp(driver);
@@ -98,7 +68,7 @@ public class LoginCasesTest extends BaseTest {
     }
 
     @Test(dataProvider = "data-provider", description = "Check error message for wrong password.")
-    public void checkErrorMessageForWrongPassword(TestCaseInformation testCaseInformation, Method method) {
+    public void checkErrorMessageForInvalidPassoword(TestCaseInformation testCaseInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Test Scenario: Check Login Scenario with invalid password.");
         closeFancyPopUp(driver);
@@ -111,7 +81,7 @@ public class LoginCasesTest extends BaseTest {
     }
 
     @Test(dataProvider = "data-provider", description = "Check error message for empty email.")
-    public void checkErrorMessageForEmptyEmail(TestCaseInformation testCaseInformation, Method method) {
+    public void checkErrorMessageForEmtpyEmail(TestCaseInformation testCaseInformation, Method method) {
 
         ExtentTestManager.startTest(method.getName(), "Test Scenario: Check Login Scenario with empty email.");
         closeFancyPopUp(driver);
