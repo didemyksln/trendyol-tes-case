@@ -1,4 +1,4 @@
-package com.trendyolLogin.utils.listeners;
+package com.trendyol.utils.listeners;
 
 import com.sun.net.httpserver.Authenticator;
 import org.testng.annotations.ITestAnnotation;

@@ -1,9 +1,9 @@
-package com.trendyolLogin.utils.listeners;
+package com.trendyol.utils.listeners;
 
 import com.relevantcodes.extentreports.LogStatus;
-import com.trendyolLogin.tests.BaseDeneme;
-import com.trendyolLogin.utils.extentReports.ExtentManager;
-import com.trendyolLogin.utils.extentReports.ExtentTestManager;
+import com.trendyol.BaseTest;
+import com.trendyol.utils.reports.ExtentManager;
+import com.trendyol.utils.reports.ExtentTestManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +11,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-public class TestListener extends BaseDeneme implements ITestListener {
+public class TestListener extends BaseTest implements ITestListener {
 
     private static String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
@@ -49,7 +49,7 @@ public class TestListener extends BaseDeneme implements ITestListener {
 
         //Get driver from BaseTest and assign to local webDriver variable.
         Object testClass = iTestResult.getInstance();
-        WebDriver webDriver = ((BaseDeneme) testClass).getDriver();
+        WebDriver webDriver = ((BaseTest) testClass).getDriver();
 
         //Take base64Screenshot screenshot.
         String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) webDriver).

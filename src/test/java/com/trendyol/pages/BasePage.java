@@ -1,4 +1,4 @@
-package com.trendyolLogin.pages;
+package com.trendyol.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

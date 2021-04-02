@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="tests" thread-count="3" verbose="1">
+<suite name="All Test Suite" parallel="tests" thread-count="6" verbose="1">
 
     <listeners>
-        <listener class-name="com.trendyolLogin.utils.listeners.TestListener"/>
-        <listener class-name="com.trendyolLogin.utils.listeners.AnnotationTransformer"/>
+        <listener class-name="com.trendyol.utils.listeners.TestListener"/>
+        <listener class-name="com.trendyol.utils.listeners.AnnotationTransformer"/>
     </listeners>
 
     <test name="LoginTestInChrome">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.trendyolLogin.tests.LoginCasesTest">
+            <class name="com.trendyol.tests.LoginCasesTest">
                 <methods>
                     <include name="successLoginCase"/>
                 </methods>
@@ -21,7 +21,7 @@
     <test name="LoginTestInFirefox">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.trendyolLogin.tests.LoginCasesTest">
+            <class name="com.trendyol.tests.LoginCasesTest">
                 <methods>
                     <include name="invalidLoginCase"/>
                 </methods>
@@ -29,12 +29,45 @@
         </classes>
     </test>
 
-    <test name="LoginTestInChrm">
+    <test name="LoginTestInChr">
         <parameter name="browser" value="Chrome"></parameter>
         <classes>
-            <class name="com.trendyolLogin.tests.LoginCasesTest">
+            <class name="com.trendyol.tests.LoginCasesTest">
                 <methods>
-                    <include name="rightErrorMessageForWrongEmail"/>
+                    <include name="checkErrorMessageForWrongEmail"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="LoginTestInChre">
+        <parameter name="browser" value="Chrome"></parameter>
+        <classes>
+            <class name="com.trendyol.tests.LoginCasesTest">
+                <methods>
+                    <include name="checkErrorMessageForWrongPassword"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="LoginTestInCh">
+        <parameter name="browser" value="Chrome"></parameter>
+        <classes>
+            <class name="com.trendyol.tests.LoginCasesTest">
+                <methods>
+                    <include name="checkErrorMessageForEmptyEmail"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <test name="LoginTestInCrm">
+        <parameter name="browser" value="Chrome"></parameter>
+        <classes>
+            <class name="com.trendyol.tests.LoginCasesTest">
+                <methods>
+                    <include name="checkErrorMessageForEmptyPassword"/>
                 </methods>
             </class>
         </classes>

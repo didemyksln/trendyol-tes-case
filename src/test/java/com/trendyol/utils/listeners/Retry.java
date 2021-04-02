@@ -1,8 +1,8 @@
-package com.trendyolLogin.utils.listeners;
+package com.trendyol.utils.listeners;
 
 import com.relevantcodes.extentreports.LogStatus;
-import com.trendyolLogin.tests.BaseDeneme;
-import com.trendyolLogin.utils.extentReports.ExtentTestManager;
+import com.trendyol.BaseTest;
+import com.trendyol.utils.reports.ExtentTestManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +32,7 @@ public class Retry implements IRetryAnalyzer {
 
     public void extendReportsFailOperations(ITestResult iTestResult) {
         Object testClass = iTestResult.getInstance();
-        WebDriver webDriver = ((BaseDeneme) testClass).getDriver();
+        WebDriver webDriver = ((BaseTest) testClass).getDriver();
         String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BASE64);
         ExtentTestManager.getTest().log(LogStatus.FAIL, "Test Failed",
                 ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));

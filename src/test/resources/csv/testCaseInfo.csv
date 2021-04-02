@@ -1,0 +1,8 @@
+TestCaseName,Email,Password
+SuccessLoginCase,seleniumprojetest@gmail.com,Selenium_5367
+InvalidLoginCase,selenium@gmail.co,Selel556
+CheckErrorMessageForInvalidEmail,seleniumtes@gmail.com,Selenium_5367
+CheckErrorMessageForInvalidPassoword,seleniumprojetest@gmail.com,123456
+CheckErrorMessageForEmtpyEmail,"",Selenium_5367
+CheckErrorMessageForEmptyPassword,seleniumtes@gmail.com,""
+

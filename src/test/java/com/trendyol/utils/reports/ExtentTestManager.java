@@ -1,4 +1,4 @@
-package com.trendyolLogin.utils.extentReports;
+package com.trendyol.utils.reports;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;

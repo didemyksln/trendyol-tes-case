@@ -1,11 +1,10 @@
-package com.trendyol;
+package com.trendyol.tests;
 
+import com.trendyol.BaseTest;
 import com.trendyol.model.BoutiquePageResponse;
-import com.trendyolLogin.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.io.FileWriter;
@@ -15,14 +14,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoutiqueLoaderTest extends Base {
-
-    public WebDriver driver;
-
-    @BeforeTest
-    public void initialize() {
-        driver = initializeDriver("chrome");
-    }
+public class BoutiqueLoaderTest extends BaseTest {
 
     @Test
     public void loadBoutiqueLinks() throws IOException {
@@ -34,21 +26,21 @@ public class BoutiqueLoaderTest extends Base {
     private void writeResponseCodeToCSV(List<BoutiquePageResponse> boutiquePageResponseList) throws IOException {
         try (FileWriter csvWriter = new FileWriter("new.csv")) {
             csvWriter.append("Boutique Link")
-                .append(";")
-                .append("Response Code")
-                .append("\n");
+                    .append(";")
+                    .append("Response Code")
+                    .append("\n");
 
             for (BoutiquePageResponse boutiquePageResponse : boutiquePageResponseList) {
                 csvWriter.append(boutiquePageResponse.getUrl())
-                    .append(";")
-                    .append(String.valueOf(boutiquePageResponse.getResponseCode()))
-                    .append("\n");
+                        .append(";")
+                        .append(String.valueOf(boutiquePageResponse.getResponseCode()))
+                        .append("\n");
             }
             csvWriter.flush();
         }
     }
 
-    private List<BoutiquePageResponse> fetchBoutiquePages() {
+    private List<BoutiquePageResponse> fetchBoutiquePages() throws IOException {
         List<BoutiquePageResponse> boutiquePageResponseList = new ArrayList<>();
         List<WebElement> elements = driver.findElements(By.xpath("//article[@class='component-item']/a"));
         for (WebElement element : elements) {
@@ -59,16 +51,13 @@ public class BoutiqueLoaderTest extends Base {
         return boutiquePageResponseList;
     }
 
-    private static int doGet(String href) {
-        try {
-            URL url = new URL(href);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            return con.getResponseCode();
-        } catch (IOException e) {
-            // TODO :: create a new type exception
-            throw new RuntimeException(e);
-        }
+    private static int doGet(String href) throws IOException {
+
+        URL url = new URL(href);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        return con.getResponseCode();
+
     }
 
     private static void closeFancyPopUp(WebDriver driver) {

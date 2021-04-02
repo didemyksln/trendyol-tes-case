@@ -1,4 +1,4 @@
-package com.trendyolLogin.pages;
+package com.trendyol.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,7 +12,6 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
-    String urlAfterSuccessLogin = "https://www.trendyol.com/butik/liste";
     By loginBtn = By.xpath("//button[@type='submit']");
     By emailText = By.id("login-email");
     By passWordTesxt = By.id("login-password-input");
@@ -27,13 +26,8 @@ public class LoginPage extends BasePage {
     }
 
 
-    public LoginPage verifyLoginEmail(String expectedText) {
+    public LoginPage verifyLogin(String expectedText) {
         assertEquals(getErrorMessage(), expectedText);
-        return this;
-    }
-
-    public LoginPage verifyLoginPassword(String expectedText) {
-        assertEquals(errorMessage, expectedText);
         return this;
     }
 

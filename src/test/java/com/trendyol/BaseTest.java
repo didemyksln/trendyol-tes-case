@@ -1,22 +1,18 @@
-package com.trendyolLogin.tests;
+package com.trendyol;
 
-import com.beust.jcommander.Parameter;
-import com.trendyolLogin.pages.HomePage;
+import com.trendyol.pages.HomePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
-public class BaseDeneme {
+public class BaseTest {
 
     public WebDriver driver;
     public HomePage homePage;
@@ -27,7 +23,7 @@ public class BaseDeneme {
 
     @BeforeClass
     @Parameters("browser")
-    public void classLevelSetup(String browser) {
+    public void classLevelSetup(@Optional("chrome") String browser) {
 
         if (browser.equalsIgnoreCase("chrome")) {
 
@@ -45,7 +41,7 @@ public class BaseDeneme {
             driver.get("http://www.trendyol.com");
             driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
-        } else if (browser.equalsIgnoreCase("firefox")) {
+        } else {
             System.setProperty("webdriver.chrome.driver", "/Users/didemyukselen/Downloads/trendyolcase/src/test/resources/drivers/mac/geckodriver");
             driver = new FirefoxDriver();
             driver.manage().window().maximize();
