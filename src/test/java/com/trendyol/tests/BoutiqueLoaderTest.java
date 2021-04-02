@@ -7,10 +7,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,11 @@ public class BoutiqueLoaderTest extends BaseTest {
     }
 
     private void writeResponseCodeToCSV(List<BoutiquePageResponse> boutiquePageResponseList) throws IOException {
-        try (FileWriter csvWriter = new FileWriter("new.csv")) {
+        String parentDirectory = System.getProperty("user.dir") + File.separator + "target" + File.separator + "case1";
+        String filePath = parentDirectory + File.separator + "case-1-response-code.csv" ;
+        Files.createDirectories(Paths.get(parentDirectory));
+
+        try (FileWriter csvWriter = new FileWriter(filePath)) {
             csvWriter.append("Boutique Link")
                     .append(";")
                     .append("Response Code")

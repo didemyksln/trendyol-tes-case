@@ -2,13 +2,15 @@ package com.trendyol;
 
 import com.trendyol.pages.HomePage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.*;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 
@@ -21,44 +23,23 @@ public class BaseTest {
         return driver;
     }
 
-    @BeforeClass
+    @BeforeMethod
     @Parameters("browser")
-    public void classLevelSetup(@Optional("chrome") String browser) {
+    public void classLevelSetup(@Optional("chrome") String browser) throws MalformedURLException {
 
         if (browser.equalsIgnoreCase("chrome")) {
-
-            Map<String, Object> prefs = new HashMap<String, Object>();
-
-            prefs.put("profile.default_content_setting_values.notifications", 2);
-
-            ChromeOptions options = new ChromeOptions();
-            options.setExperimentalOption("prefs", prefs);
-
-            System.setProperty("webdriver.chrome.driver", "/Users/didemyukselen/Downloads/trendyolcase/src/test/resources/drivers/mac/chromedriver");
-            driver = new ChromeDriver(options);
-            driver.manage().window().maximize();
-
-            driver.get("http://www.trendyol.com");
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
-
-        } else {
-            System.setProperty("webdriver.chrome.driver", "/Users/didemyukselen/Downloads/trendyolcase/src/test/resources/drivers/mac/geckodriver");
-            driver = new FirefoxDriver();
-            driver.manage().window().maximize();
-
-            driver.get("http://www.trendyol.com");
-            driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.chrome());
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.firefox());
         }
 
-    }
-
-    @BeforeMethod
-    public void methodLevelSetup() {
+        driver.manage().window().maximize();
+        driver.get("http://www.trendyol.com");
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         homePage = new HomePage(driver);
     }
 
-
-    @AfterClass
+    @AfterMethod
     public void teardown() {
         driver.quit();
     }
