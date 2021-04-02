@@ -5,7 +5,12 @@ import com.trendyol.BaseTest;
 import com.trendyol.model.BoutiquePageResponse;
 import com.trendyol.model.ServerResponse;
 import com.trendyol.utils.reports.ExtentTestManager;
-import org.openqa.selenium.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
@@ -23,6 +28,8 @@ import java.util.List;
 import static com.trendyol.utils.FileUtils.writeToCSVFile;
 
 public class BoutiqueLoaderTest extends BaseTest {
+
+    private static final Logger logger = LogManager.getLogger(BoutiqueLoaderTest.class);
 
     @Test
     public void loadBoutiqueLinks(Method method) throws IOException {
@@ -47,18 +54,18 @@ public class BoutiqueLoaderTest extends BaseTest {
         List<ServerResponse> serverResponses = fetchBoutiqueImageLink();
         List<List<String>> contentList = new ArrayList<>();
         for (ServerResponse serverResponse : serverResponses) {
-            contentList.add(Lists.newArrayList(serverResponse.getUrl(), String.valueOf(serverResponse.getResponseTime()),String.valueOf(serverResponse.getStatusCode())));
+            contentList.add(Lists.newArrayList(serverResponse.getUrl(), String.valueOf(serverResponse.getResponseTime()), String.valueOf(serverResponse.getStatusCode())));
         }
-        writeToCSVFile("boutique-image-load-time-responce-code.csv",new String[]{"Boutique Image Link","Responce Time","Responce Code"},contentList);
+        writeToCSVFile("boutique-image-load-time-responce-code.csv", new String[]{"Boutique Image Link", "Responce Time", "Responce Code"}, contentList);
 
     }
 
     private void scrollDown(WebDriver driver) {
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2000; i++) {
 
             JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,1000)");
+            js.executeScript("window.scrollBy(0,5)");
         }
 
     }
@@ -84,8 +91,6 @@ public class BoutiqueLoaderTest extends BaseTest {
             String imageUrl = element.getAttribute("src");
             ServerResponse serverResponse = fetchUrlWithTime(imageUrl);
             serverResponses.add(serverResponse);
-            System.out.println(imageUrl);
-
         }
 
         return serverResponses;
@@ -106,6 +111,7 @@ public class BoutiqueLoaderTest extends BaseTest {
     private static int fetchUrl(String href) throws IOException {
         URL url = new URL(href);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestProperty("User-Agent", "");
         con.setRequestMethod("GET");
 
         int statusCode = con.getResponseCode();
@@ -115,8 +121,8 @@ public class BoutiqueLoaderTest extends BaseTest {
             String currentLine;
             while ((currentLine = br.readLine()) != null) {
             }
-            System.out.println("=========");
         }
+        logger.info("Fetching Url " + url + ", status code: " + statusCode);
         return statusCode;
     }
 
